@@ -1,0 +1,13 @@
+---
+interface Props {
+  href: string;
+  active: boolean;
+}
+const { href, active } = Astro.props;
+---
+
+<li>
+  <a {href} class:list={[{ active }]}>
+    <slot />
+  </a>
+</li>

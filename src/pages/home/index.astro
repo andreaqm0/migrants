@@ -1,0 +1,228 @@
+---
+import LoggedLayout from "@/layouts/LoggedLayout.astro";
+import Card from "@/components/Card.astro";
+import Stat from "@/components/Stat.svelte";
+
+import Chart from "@/components/Chart.svelte";
+import Clipboard from "../../components/icons/Clipboard.astro";
+import Warning from "../../components/icons/Warning.astro";
+import CaretUp from "../../components/icons/CaretUp.astro";
+import CaretDown from "../../components/icons/CaretDown.astro";
+import type { Label } from "recharts";
+
+const data = {
+  refEntries: [
+    { month: "Jun, 23", count: 1005 },
+    { month: "Jul, 23", count: 3506 },
+    { month: "Ago, 23", count: 2508 },
+    { month: "Sep, 23", count: 4502 },
+    { month: "Oct, 23", count: 1908 },
+    { month: "Nov, 23", count: 2509 },
+  ],
+  compInv: [
+    { category: "Comestibles", porc: 21.2 },
+    { category: "Higiene Personal", porc: 12.1 },
+    { category: "Mantas y Abrigo", porc: 2.32 },
+    { category: "Medicamentos", porc: 7.18 },
+    { category: "Bebidas", porc: 4.5 },
+    { category: "Articulos de Limpieza", porc: 11.8 },
+    { category: "Articulos para bebés", porc: 15.3 },
+    { category: "Frutas y Verduras", porc: 14.9 },
+    { category: "Enlatados", porc: 10.8 },
+  ],
+  incAndWit: [
+    { month: "Jun, 23", incomes: 105, withdraws: 125 },
+    { month: "Jul, 23", incomes: 356, withdraws: 136 },
+    { month: "Ago, 23", incomes: 258, withdraws: 245 },
+    { month: "Sep, 23", incomes: 452, withdraws: 295 },
+    { month: "Oct, 23", incomes: 198, withdraws: 167 },
+    { month: "Nov, 23", incomes: 259, withdraws: 212 },
+  ],
+};
+
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  aspectRatio: 5 / 4,
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+};
+---
+
+<LoggedLayout title="Welcomex | Inicio">
+  <main class="grid grid-cols-6 gap-5 px-10 py-8">
+    <Card classList="bg-base-100 shadow-lg col-span-6">
+      <h3 class="text-gray-400 font-semibold">Resumen</h3>
+      <div class="border rounded-2xl grid grid-cols-4">
+        <Stat>
+          <div slot="icon">
+            <Clipboard classList="w-6 h-6" />
+          </div>
+          <div slot="title">Productos con Stock</div>
+          <div slot="desc">
+            Hoy, {
+              new Date().toLocaleString("es-mx", {
+                dateStyle: "long",
+              })
+            }
+          </div>
+        </Stat>
+        <Stat>
+          <div slot="icon">
+            <Warning classList="w-7 h-7" />
+          </div>
+          <div slot="title">Productos Bajos en Stock</div>
+        </Stat>
+        <Stat>
+          <div slot="icon">
+            <CaretUp classList="w-6 h-6" />
+          </div>
+          <div slot="title">Entradas de Inventario</div>
+          <div slot="desc">
+            {
+              new Date().toLocaleString("es-mx", {
+                month: "long",
+                year: "numeric",
+              })
+            }
+          </div>
+        </Stat>
+        <Stat>
+          <div slot="icon">
+            <CaretDown classList="w-6 h-6" />
+          </div>
+          <div slot="title">Salidas de Inventario</div>
+          <div slot="desc">
+            {
+              new Date().toLocaleString("es-mx", {
+                month: "long",
+                year: "numeric",
+              })
+            }
+          </div>
+        </Stat>
+      </div>
+    </Card>
+
+    <!-- CHARTS -->
+    <Card classList="bg-base-100 shadow-lg col-span-6 lg:col-span-3">
+      <h2 class="font-semibold text-gray-400">
+        Ingreso de Refugiados (Últimos 6 meses)
+      </h2>
+      <Chart
+        client:load
+        classList="h-full"
+        type="line"
+        labels={data.refEntries.map((row) => row.month)}
+        datasets={[
+          {
+            label: "Visitas",
+            data: data.refEntries.map((row) => row.count),
+            fill: true,
+            tension: 0.3,
+          },
+        ]}
+        options={options}
+        }
+      />
+    </Card>
+    <Card classList="bg-base-100 shadow-lg col-span-6 lg:col-span-3">
+      <h3 class="text-gray-400 font-semibold">
+        Comparativa de Entradas y Salidas de Inventario (Últimos 6 meses)
+      </h3>
+      <Chart
+        client:load
+        classList="h-full"
+        type="bar"
+        labels={data.incAndWit.map((row) => row.month)}
+        datasets={[
+          {
+            label: "Entradas",
+            data: data.incAndWit.map((row) => row.incomes),
+          },
+          {
+            label: "Salidas",
+            data: data.incAndWit.map((row) => row.withdraws),
+          },
+        ]}
+        {options}
+      />
+    </Card>
+    <Card
+      classList="bg-base-100 shadow-lg col-span-6 md:col-span-3 xl:col-span-4"
+    >
+      <h2 class="font-semibold text-gray-400">
+        Promedio de Ocupación (mensual)
+      </h2>
+      <Chart
+        client:load
+        classList="h-full"
+        type="line"
+        labels={[
+          "Ene",
+          "Feb",
+          "Mar",
+          "Abr",
+          "May",
+          "Jun",
+          "Jul",
+          "Ago",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dic",
+        ]}
+        datasets={[
+          {
+            label: "%",
+            data: [
+              79.51, 71.8, 76.4, 81.2, 84.5, 96.3, 97.8, 91.2, 81.3, 71.3, 83.6,
+              97.9,
+            ],
+            tension: 0.3,
+          },
+        ]}
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+          aspectRatio: 3 / 2,
+          scales: {
+            y: {
+              min: 65,
+            },
+          },
+        }}
+      />
+    </Card>
+    <Card
+      classList="bg-base-100 shadow-lg col-span-6 md:col-span-3 xl:col-span-2"
+    >
+      <h2 class="font-semibold text-gray-400">
+        Composición del Inventario (categorias)
+      </h2>
+      <Chart
+        client:load
+        type="polarArea"
+        labels={data.compInv.map((row) => row.category)}
+        datasets={[
+          {
+            label: "%",
+            data: data.compInv.map((row) => row.porc),
+          },
+        ]}
+        options={{
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+        }}
+      />
+    </Card>
+  </main>
+</LoggedLayout>

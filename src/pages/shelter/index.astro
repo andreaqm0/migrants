@@ -1,0 +1,21 @@
+---
+import LoggedLayout from "@/layouts/LoggedLayout.astro";
+import PageSummary from "../../components/PageSummary.astro";
+import DetailsCard from '@/components/shelter_configs/DetailsCard.svelte'
+import PhoneNumbersCard from '@/components/shelter_configs/PhoneNumbersCard/PhoneNumbersCard.svelte'
+import EmailsCard from '@/components/shelter_configs/EmailsCard/EmailsCard.svelte'
+---
+
+<LoggedLayout>
+  <main class="px-10 py-8">
+    <PageSummary title="Administrar Refugio" summary="Panel de configuración de tu refugio" />
+    <div class="grid grid-cols-2 gap-5">
+      <!-- DETALLES -->
+      <DetailsCard client:load />
+      <!-- TELÉFONOS -->
+      <PhoneNumbersCard client:load />
+      <!-- EMAILS -->
+      <EmailsCard client:load />
+    </div>
+  </main>
+</LoggedLayout>

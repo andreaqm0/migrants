@@ -1,0 +1,206 @@
+---
+// import components
+import LoggedLayout from "@/layouts/LoggedLayout.astro";
+import Card from "@/components/Card.astro";
+import PageSummary from "@/components/PageSummary.astro";
+import SearchBar from "@/components/data/Stays/SearchBar.svelte";
+import StaysTable from "@/components/data/Stays/StaysTable.svelte"
+// import icons
+import Adjustments from "@/components/icons/Adjustments.astro";
+import Close from "@/components/icons/Close.astro";
+import ClockOutline from "@/components/icons/ClockOutline.astro";
+
+const stays = [
+  {
+    id: 587432,
+    name: "Emma",
+    lastname: "García",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Perú",
+    phoneNumber: "123456789",
+    email: "emmagonzalez@example.com",
+    arrivalDate: new Date(2023,11,15,12,13,34).toISOString(),
+  },
+  {
+    id: 876543,
+    name: "Liam",
+    lastname: "Martínez",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Chile",
+    phoneNumber: null,
+    email: null,
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 135790,
+    name: "Sofia",
+    lastname: "Rodríguez",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Colombia",
+    phoneNumber: null,
+    email: null,
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 246801,
+    name: "Mateo",
+    lastname: "Pérez",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Ecuador",
+    phoneNumber: "987654321",
+    email: "mateoperez@example.com",
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 987654,
+    name: "Isabella",
+    lastname: "Williams",
+    imgUrl: "/default-photo.jpg",
+    nationality: "México",
+    phoneNumber: null,
+    email: null,
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 123789,
+    name: "Lucas",
+    lastname: "Brown",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Argentina",
+    phoneNumber: "555123456",
+    email: "lucasbrown@example.com",
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 456321,
+    name: "Olivia",
+    lastname: "Jones",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Guatemala",
+    phoneNumber: null,
+    email: null,
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 789012,
+    name: "Ethan",
+    lastname: "Miller",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Venezuela",
+    phoneNumber: "876543210",
+    email: "ethanmiller@example.com",
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 654321,
+    name: "Mia",
+    lastname: "Cubas",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Cuba",
+    phoneNumber: null,
+    email: null,
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 987654,
+    name: "Luis",
+    lastname: "Hernández",
+    imgUrl: "/default-photo.jpg",
+    nationality: "México",
+    phoneNumber: "555987654",
+    email: "luishernandez@example.com",
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 543210,
+    name: "Valentina",
+    lastname: "Gómez",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Colombia",
+    phoneNumber: null,
+    email: null,
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 876543,
+    name: "Diego",
+    lastname: "López",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Argentina",
+    phoneNumber: null,
+    email: null,
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 321098,
+    name: "Camila",
+    lastname: "Ramírez",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Chile",
+    phoneNumber: "789012345",
+    email: "camilaramirez@example.com",
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 234567,
+    name: "Sebastián",
+    lastname: "Molina",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Perú",
+    phoneNumber: null,
+    email: null,
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 789012,
+    name: "Isabel",
+    lastname: "Ortega",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Ecuador",
+    phoneNumber: "654321987",
+    email: "isabelortega@example.com",
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 456789,
+    name: "Daniel",
+    lastname: "Sánchez",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Venezuela",
+    phoneNumber: null,
+    email: null,
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+  {
+    id: 123456,
+    name: "Amanda",
+    lastname: "Castro",
+    imgUrl: "/default-photo.jpg",
+    nationality: "Guatemala",
+    phoneNumber: "987654321",
+    email: "amandacastro@example.com",
+    arrivalDate: "2023-09-17 20:19:58",
+  },
+];
+---
+
+<LoggedLayout>
+  <main class="px-10 py-8">
+    <PageSummary
+      title="Vistas"
+      summary="Resumen de las entradas de personas al refugio."
+    />
+    <Card classList="bg-base-100 shadow">
+      <div class="flex justify-between items-center pb-5">
+        <h2 class="font-semibold text-slate-400 text-lg">Visitas</h2>
+        <SearchBar client:load>
+          <Adjustments classList="w-3 h-3" slot="filter-icon" />
+          <Close classList="w-2 h-2" slot="clear-icon" />
+        </SearchBar>
+      </div>
+      <StaysTable client:load {stays}>
+        <ClockOutline classList="w-3 h-3" slot="clock-icon" />
+      </StaysTable>
+    </Card>
+  </main>
+</LoggedLayout>

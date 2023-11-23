@@ -1,0 +1,213 @@
+---
+import LoggedLayout from "@/layouts/LoggedLayout.astro";
+import Card from "@/components/Card.astro";
+import Building from "@/components/icons/Building.astro";
+import Stat from "@/components/Stat.svelte";
+import UsersGroup from "@/components/icons/UsersGroup.astro";
+import Inbox from "@/components/icons/Inbox.astro";
+
+import Chart from "@/components/Chart.svelte";
+import Users from "../../components/icons/Users.astro";
+
+const data = {
+  nationalities: [
+    { nationality: "Honduras", count: 26851 },
+    { nationality: "El Salvador", count: 25135 },
+    { nationality: "Nigeria", count: 34215 },
+    { nationality: "Ucrania", count: 10985 },
+    { nationality: "Venezuela", count: 21546 },
+    { nationality: "Guatemala", count: 29541 },
+    { nationality: "Cuba", count: 7562 },
+  ],
+  ageGroups: [
+    { group: "<1", count: 18524 },
+    { group: "1-9>", count: 25954 },
+    { group: "10-17", count: 26547 },
+    { group: "18-29", count: 58952 },
+    { group: "30-49", count: 41054 },
+    { group: "50-69", count: 31254 },
+    { group: "70>", count: 10254 },
+  ],
+  occupation: [
+    { month: "Ene", avg: 18524 },
+    { month: "Feb", avg: 25954 },
+    { month: "Mar", avg: 26547 },
+    { month: "Abr", avg: 58952 },
+    { month: "May", avg: 41054 },
+    { month: "Jun", avg: 31254 },
+    { month: "Jul", avg: 10254 },
+    { month: "Ago", avg: 18524 },
+    { month: "Sep", avg: 25954 },
+    { month: "Oct", avg: 26547 },
+    { month: "Nov", avg: 58952 },
+    { month: "Dic", avg: 41054 },
+  ],
+  sex: [
+    { sex: "Hombres", count: 54673 },
+    { sex: "Mujeres", count: 67834 },
+  ],
+  shelters: [
+    { state: "Baja California", count: 105 },
+    { state: "Nuevo Leon", count: 56 },
+    { state: "Queretaro", count: 95 },
+    { state: "Chihuahua", count: 62 },
+    { state: "CDMX", count: 74 },
+    { state: "Colima", count: 67 },
+    { state: "Tamaulipas", count: 103 },
+  ],
+};
+
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  aspectRatio: 5 / 4,
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+};
+---
+
+<LoggedLayout title="Welcomex | Inicio">
+  <main class="grid grid-cols-6 gap-5 px-10 py-8">
+    <Card classList="bg-base-100 shadow-lg col-span-6">
+      <h3 class="text-gray-400 font-semibold">Resumen</h3>
+      <div class="border rounded-2xl grid grid-cols-4">
+        <Stat>
+          <div slot="icon">
+            <Building classList="w-6 h-6" />
+          </div>
+          <div slot="title">Refugios Registrados</div>
+          <div slot="desc">
+            Hoy, {
+              new Date().toLocaleString("es-mx", {
+                dateStyle: "long",
+              })
+            }
+          </div>
+        </Stat>
+        <Stat>
+          <div slot="icon">
+            <Users classList="w-6 h-6" />
+          </div>
+          <div slot="title">Usuarios Registrados</div>
+        </Stat>
+        <Stat>
+          <div slot="icon">
+            <UsersGroup classList="w-6 h-6" />
+          </div>
+          <div slot="title">Migrantes Registrados</div>
+        </Stat>
+        <Stat>
+          <div slot="icon">
+            <Inbox classList="w-6 h-6" />
+          </div>
+          <div slot="title">Solicitudes de Registro</div>
+        </Stat>
+      </div>
+    </Card>
+
+    <!-- CHARTS -->
+    <Card classList="bg-base-100 shadow-lg col-span-6 lg:col-span-3">
+      <h3 class="text-gray-400 font-semibold">Número de Refugios por Estado</h3>
+      <Chart
+        client:load
+        type="bar"
+        labels={data.shelters.map((row) => row.state)}
+        datasets={[
+          {
+            label: "# de refugiados",
+            data: data.nationalities.map((row) => row.count),
+          },
+        ]}
+        {options}
+      />
+    </Card>
+    <Card classList="bg-base-100 shadow-lg col-span-6 lg:col-span-3">
+      <h2 class="font-semibold text-gray-400">
+        Promedio de Ocupación de los Refugios por Mes
+      </h2>
+      <Chart
+        client:load
+        type="line"
+        labels={data.occupation.map((row) => row.month)}
+        datasets={[
+          {
+            label: "Promedio de refugiados",
+            data: data.occupation.map((row) => row.avg),
+            fill: true,
+            tension: 0.3,
+          },
+        ]}
+        {options}
+      />
+    </Card>
+    <Card
+      classList="bg-base-100 shadow-lg col-span-6 md:col-span-3 xl:col-span-2"
+    >
+      <h2 class="font-semibold text-gray-400">
+        Distribución de Migrantes por Nacionalidad
+      </h2>
+      <Chart
+        client:load
+        type="doughnut"
+        labels={data.nationalities.map((row) => row.nationality)}
+        datasets={[
+          {
+            label: "# de refugiados",
+            data: data.nationalities.map((row) => row.count),
+          },
+        ]}
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+        }}
+      />
+    </Card>
+    <Card
+      classList="bg-base-100 shadow-lg col-span-6 md:col-span-3 xl:col-span-2"
+    >
+      <h2 class="font-semibold text-gray-400">
+        Distribución de Migrantes por Grupo de Edad
+      </h2>
+      <Chart
+        client:load
+        type="doughnut"
+        labels={data.ageGroups.map((row) => row.group)}
+        datasets={[
+          {
+            label: "# de refugiados",
+            data: data.ageGroups.map((row) => row.count),
+          },
+        ]}
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+        }}
+      />
+    </Card>
+    <Card
+      classList="bg-base-100 shadow-lg col-span-6 xl:col-span-2"
+    >
+      <h2 class="font-semibold text-gray-400">
+        Distribución de Migrantes por Sexo
+      </h2>
+      <Chart
+        client:load
+        type="doughnut"
+        labels={data.sex.map((row) => row.sex)}
+        datasets={[
+          {
+            label: "# de refugiados",
+            data: data.sex.map((row) => row.count),
+          },
+        ]}
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+        }}
+      />
+    </Card>
+  </main>
+</LoggedLayout>

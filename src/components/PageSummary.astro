@@ -1,0 +1,19 @@
+---
+interface Props {
+    title: string,
+    summary: string
+}
+
+const {title, summary} = Astro.props
+---
+<div class="pb-6 flex justify-between items-center">
+  <div>
+    <h2 class="font-bold text-3xl text-slate-600">{title}</h2>
+    <p class="text-sm text-slate-500 py-1">
+      {summary}
+    </p>
+  </div>
+  <div class="hidden sm:flex">
+    <slot name="right-content" />
+  </div>
+</div>

@@ -1,0 +1,175 @@
+---
+// import components
+import LoggedLayout from "@/layouts/LoggedLayout.astro";
+import PageSummary from "@/components/PageSummary.astro";
+import Card from "@/components/Card.astro";
+import SearchBar from "@/components/data/Transactions/SearchBar.svelte";
+import TransactionsTable from '@/components/data/Transactions/TransactionsTable.svelte'
+// import icons
+import Adjustments from "@/components/icons/Adjustments.astro";
+import ClockOutline from "@/components/icons/ClockOutline.astro";
+import Close from "@/components/icons/Close.astro";
+
+const transactions = [
+  {
+    id: 1,
+    description:
+      "Magna consequat in sunt consectetur dolor sint pariatur deserunt sunt velit laboris.",
+    signedBy: "Alex Gómez",
+    category: "A",
+    product: "Excepteur aliqua ad",
+    imgUrl: "/default.png",
+    qty: 15,
+    income: false,
+    created_at: "2023-07-01 12:00:00",
+  },
+  {
+    id: 2,
+    description:
+      "Anim deserunt ullamco labore irure exercitation commodo voluptate anim incididunt id.",
+    signedBy: "Gabriel Díaz",
+    category: "B",
+    product: "Laborum",
+    imgUrl: "/default.png",
+    qty: 3,
+    income: true,
+    created_at: "2023-07-01 13:12:43",
+  },
+  {
+    id: 3,
+    description:
+      "Irure reprehenderit anim ad reprehenderit mollit proident velit elit tempor.",
+    signedBy: "Luis Pérez",
+    category: "A",
+    product: "Ut culpa",
+    imgUrl: "/default.png",
+    qty: 5,
+    income: true,
+    created_at: "2023-07-03 15:26:39",
+  },
+  {
+    id: 4,
+    description: "Aute eu cillum magna voluptate elit.",
+    signedBy: "Andrea Quintero",
+    category: "A",
+    product: "Qui nulla",
+    imgUrl: "/default.png",
+    qty: 25,
+    income: false,
+    created_at: "2023-07-10 10:54:23",
+  },
+  {
+    id: 5,
+    description:
+      "Quis culpa consectetur deserunt fugiat qui aliquip in laborum.",
+    signedBy: "Karla Rico",
+    category: "C",
+    product: "Do minim occaecat",
+    imgUrl: "/default.png",
+    qty: 7,
+    income: true,
+    created_at: "2023-07-12 16:43:12",
+  },
+  {
+    id: 6,
+    description: "Ad proident irure et minim deserunt eiusmod ut.",
+    signedBy: "Alex Gómez",
+    category: "B",
+    product: "Nisi velit",
+    imgUrl: "/default.png",
+    qty: 20,
+    income: false,
+    created_at: "2023-07-13 14:23:53",
+  },
+  {
+    id: 7,
+    description: "Cillum irure nisi labore culpa amet esse.",
+    signedBy: "Luis Peréz",
+    category: "B",
+    product: "Nostrud",
+    imgUrl: "/default.png",
+    qty: 5,
+    income: true,
+    created_at: "2023-07-13 17:12:34",
+  },
+  {
+    id: 8,
+    description:
+      "Excepteur adipisicing exercitation non pariatur consequat et eiusmod officia non nostrud sit.",
+    signedBy: "Alex Gómez",
+    category: "C",
+    product: "Deserunt dolor",
+    imgUrl: "/default.png",
+    qty: 50,
+    income: true,
+    created_at: "2023-07-15 10:51:16",
+  },
+  {
+    id: 9,
+    description:
+      "Duis consectetur id id id qui est officia sunt consectetur Lorem.",
+    signedBy: "Gabriel Díaz",
+    category: "A",
+    product: "Ullamco consequat.",
+    imgUrl: "/default.png",
+    qty: 12,
+    income: true,
+    created_at: "2023-07-15 12:12:34",
+  },
+  {
+    id: 10,
+    description: "Lorem Lorem anim consequat officia mollit.",
+    signedBy: "Karla Rico",
+    category: "C",
+    product: "Culpa irure esse",
+    imgUrl: "/default.png",
+    qty: 8,
+    income: true,
+    created_at: "2023-07-16 09:23:54",
+  },
+  {
+    id: 11,
+    description:
+      "Adipisicing voluptate laborum cillum et reprehenderit esse minim laborum pariatur ullamco proident minim. Aliqua nostrud fugiat pariatur non dolore adipisicing sunt ad. Pariatur consectetur officia amet dolor nostrud. Mollit eu sit non amet sint eiusmod adipisicing deserunt consequat. Consequat ad cupidatat pariatur culpa eiusmod irure elit occaecat tempor sunt. Sunt irure dolor dolore culpa non laborum consectetur. Cupidatat veniam aliqua aliqua veniam. Consectetur ipsum velit laboris esse nostrud sit occaecat ut labore eu deserunt non irure fugiat.",
+    signedBy: "Alex Gómez",
+    category: "B",
+    product: "Ea sunt id",
+    imgUrl: "/default.png",
+    qty: 10,
+    income: true,
+    created_at: "2023-07-17 10:34:11",
+  },
+  {
+    id: 12,
+    description: "Adipisicing eiusmod amet eu sint.",
+    signedBy: "Karla Rico",
+    category: "B",
+    product: "Aliqua nisi",
+    imgUrl: "/default.png",
+    qty: 12,
+    income: true,
+    created_at: "2023-07-21 12:22:43",
+  },
+];
+---
+
+<LoggedLayout>
+  <main class="px-10 py-8">
+    <PageSummary
+      title="Transacciones"
+      summary="Resumen de las últimas transacciones de inventario realizadas."
+    />
+    <Card classList="bg-base-100 shadow">
+      <div class="flex justify-between items-center pb-5">
+        <h2 class="font-semibold text-slate-400 text-lg">Transacciones</h2>
+        <SearchBar client:load>
+          <Adjustments classList="w-3 h-3" slot="filter-icon" />
+          <Close classList="w-2 h-2" slot="clear-icon" />
+        </SearchBar>
+      </div>
+      <TransactionsTable client:load {transactions}>
+        <ClockOutline classList="w-3 h-3" slot="clock-icon" />
+      </TransactionsTable>
+    </Card>
+  </main>
+</LoggedLayout>

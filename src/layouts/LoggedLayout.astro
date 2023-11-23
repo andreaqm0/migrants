@@ -1,0 +1,158 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SidebarItem from "../components/SidebarItem.astro";
+
+import Grid from "@/components/icons/Grid.astro";
+import Building from "@/components/icons/Building.astro";
+import Inbox from "@/components/icons/Inbox.astro";
+import Clipboard from "../components/icons/Clipboard.astro";
+import CaretUp from "../components/icons/CaretUp.astro";
+import CaretDown from "../components/icons/CaretDown.astro";
+import Archive from "../components/icons/Archive.astro";
+import UsersGroup from "../components/icons/UsersGroup.astro";
+import PlusCircle from "../components/icons/PlusCircle.astro";
+import ChartMixed from "../components/icons/ChartMixed.astro";
+import ArrowRightBracket from "../components/icons/ArrowRightBracket.astro";
+import Cog from "../components/icons/Cog.astro";
+import UserCircle from "../components/icons/UserCircle.astro";
+import SortHorizontal from "../components/icons/SortHorizontal.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<Layout title={title}>
+  <div class="bg-base-100 drawer lg:drawer-open">
+    <input id="drawer" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content bg-gray-50 h-screen overflow-y-auto">
+      <div class="navbar bg-base-100 border-b flex lg:hidden">
+        <div class="flex-none">
+          <label class="btn btn-square btn-ghost drawer-button" for="drawer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="inline-block w-5 h-5 stroke-current"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"></path></svg
+            >
+          </label>
+        </div>
+        <div class="flex-1 flex">
+          <a
+            href="/dashboard"
+            aria-current="page"
+            aria-label="Homepage"
+            class="flex-0 btn btn-ghost px-2"
+            data-svelte-h="svelte-pw6yxt"
+          >
+            <h1 class="text-2xl text-slate-700 font-bold">
+              welco<span class="text-green-500">mex</span>
+            </h1>
+          </a>
+        </div>
+      </div>
+      <slot />
+    </div>
+    <div class="drawer-side z-40 scroll-smooth scroll-pt-20">
+      <label for="drawer" class="drawer-overlay" aria-label="Close menu"
+      ></label>
+      <aside class="w-60 bg-base-100 flex flex-col h-full border-e">
+        <div
+          class="bg-base-100 sticky top-0 z-20 items-center gap-2 bg-opacity-90 px-4 py-2 backdrop-blur flex overflow-y-auto"
+        >
+          <a
+            href="/dashboard"
+            aria-current="page"
+            aria-label="Homepage"
+            class="flex-0 btn btn-ghost px-2 mx-auto"
+            data-svelte-h="svelte-pw6yxt"
+          >
+            <h1 class="text-2xl text-slate-700 font-bold">
+              welco<span class="text-green-500">mex</span>
+            </h1>
+          </a>
+        </div>
+        <ul class="menu menu-sm lg:menu-md px-4 py-3 flex-grow">
+          <SidebarItem href="/dashboard" active={currentPath === "/dashboard"}>
+            <Grid classList="w-[16px] h-[16px]" />
+             Inicio
+          </SidebarItem>
+          <SidebarItem href="/home" active={currentPath === "/home"}>
+            <Grid classList="w-[16px] h-[16px]" />
+             Inicio
+          </SidebarItem>
+          <div class="divider">Refugiados</div>
+          <SidebarItem href="/add-stay" active={currentPath === "/add-stay"}>
+            <PlusCircle classList="w-[16px] h-[16px]" />
+             Agregar Visita
+          </SidebarItem>
+          <SidebarItem href="/migrants" active={currentPath.includes("/migrants")}>
+            <UsersGroup classList="w-[16px] h-[16px]" />
+             Registro de Refugiados
+          </SidebarItem>
+          <SidebarItem
+            href="/stay-reports"
+            active={currentPath.includes("/stay-reports")}
+          >
+            <ChartMixed classList="w-[16px] h-[16px]" />
+             Visitas
+          </SidebarItem>
+          <div class="divider">Refugios</div>
+          <SidebarItem href="/shelters" active={currentPath.includes("/shelters")}>
+            <Building classList="w-[16px] h-[16px]" />
+             Refugios
+          </SidebarItem>
+          <SidebarItem href="/requests" active={currentPath.includes("/requests")}>
+            <Inbox classList="w-[16px] h-[16px]" />
+             Solicitudes
+          </SidebarItem>
+          <div class="divider">Almacen</div>
+          <SidebarItem href="/stock" active={currentPath.includes("/stock")}>
+            <Clipboard classList="w-[16px] h-[16px]" />
+             Inventario
+          </SidebarItem>
+          <SidebarItem href="/transactions" active={currentPath.includes("/transactions")}>
+            <SortHorizontal classList="w-[16px] h-[16px]" />
+             Transacciones
+          </SidebarItem>
+          <div class="mt-auto"></div>
+          <li>
+            <details open>
+              <summary class="group">
+                <Cog classList="w-[16px] h-[16px]" />
+                 Configurar
+              </summary>
+              <ul>
+                <SidebarItem
+                  href="/account"
+                  active={currentPath === "/account"}
+                >
+                   Cuenta
+                </SidebarItem>
+                <SidebarItem
+                  href="/shelter"
+                  active={currentPath === "/shelter"}
+                >
+                   Refugio
+                </SidebarItem>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <button>
+              <ArrowRightBracket classList="w-[16px] h-[16px]" /> Cerrar Sesión
+            </button>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</Layout>

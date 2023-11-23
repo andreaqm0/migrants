@@ -1,0 +1,230 @@
+---
+// import components
+import LoggedLayout from "@/layouts/LoggedLayout.astro";
+import PageSummary from "@/components/PageSummary.astro";
+import Card from "@/components/Card.astro";
+import SearchBar from "@/components/data/Shelters/SearchBar.svelte";
+import SheltersTable from "@/components/data/Shelters/SheltersTable.svelte"
+// import icons
+import Plus from "@/components/icons/Plus.astro";
+import Adjustments from "@/components/icons/Adjustments.astro";
+import Eye from "@/components/icons/EyeOutline.astro";
+import TrashBinOutline from "@/components/icons/TrashBinOutline.astro";
+import Close from "@/components/icons/Close.astro";
+// import models
+import type Shelter from "@/models/Shelter.ts";
+import ClockOutline from "../../components/icons/ClockOutline.astro";
+
+const shelters: Shelter[] = [
+  {
+    id: 1,
+    organization_name: "Refugio Amor",
+    address:
+      "Consectetur cillum cupidatat labore occaecat. Excepteur magna officia voluptate laborum pariatur minim excepteur culpa Lorem.",
+    state: "Baja California Sur",
+    city: "La Paz",
+    created_at: new Date(2023,10,16,12,16,45).toISOString(),
+  },
+  {
+    id: 2,
+    organization_name: "Qui enim ullamco minim anim sint anim non velit ipsum.",
+    address: "Officia aliquip sit culpa Lorem qui adipisicing.",
+    state: "Coahuila",
+    city: "Candela",
+    created_at: "2023-08-01 13:54:23",
+  },
+  {
+    id: 3,
+    organization_name: "Eu irure ut reprehenderit veniam.",
+    address: "Magna pariatur eiusmod dolore reprehenderit anim et.",
+    state: "Hidalgo",
+    city: "Acaxochitlan",
+    created_at: "2023-08-02 11:14:21",
+  },
+  {
+    id: 4,
+    organization_name: "Sint cillum labore occaecat in amet.",
+    address:
+      "Velit laboris laboris consequat sunt enim velit anim deserunt duis proident.",
+    state: "Aguascalientes",
+    city: "Asientos",
+    created_at: "2023-08-02 15:34:58",
+  },
+  {
+    id: 5,
+    organization_name: "Non Lorem esse commodo esse adipisicing nostrud.",
+    address:
+      "Incididunt deserunt veniam ad do est ea consequat voluptate esse duis Lorem culpa.",
+    state: "Morelos",
+    city: "Cuautla",
+    created_at: "2023-08-02 19:37:44",
+  },
+  {
+    id: 6,
+    organization_name: "Ea labore id incididunt sint sint duis pariatur.",
+    address:
+      "Velit aliquip nisi culpa pariatur pariatur sit quis eu aute laboris voluptate excepteur magna amet.",
+    state: "Sinaloa",
+    city: "Cosala",
+    created_at: "2023-08-02 20:49:12",
+  },
+  {
+    id: 7,
+    organization_name: "Eu est veniam eu aliquip nisi nostrud.",
+    address:
+      "Voluptate nostrud esse duis id exercitation in sit minim proident ex.",
+    state: "Guerrero",
+    city: "Alpoyeca",
+    created_at: "2023-08-03 17:12:35",
+  },
+  {
+    id: 8,
+    organization_name: "Nulla culpa anim deserunt aliqua.",
+    address:
+      "Duis eu aliqua officia nostrud excepteur non aliqua nostrud ex duis do.",
+    state: "Quintana Roo",
+    city: "Cozumel",
+    created_at: "2023-08-03 19:55:41",
+  },
+  {
+    id: 9,
+    organization_name:
+      "Dolor esse officia irure velit dolore duis esse nostrud qui.",
+    address:
+      "Duis eu aliqua officia nostrud excepteur non aliqua nostrud ex duis do.",
+    state: "Quintana Roo",
+    city: "Cozumel",
+    created_at: "2023-08-03 19:55:41",
+  },
+  {
+    id: 10,
+    organization_name: "Duis laboris aute laborum esse.",
+    address:
+      "Duis eu aliqua officia nostrud excepteur non aliqua nostrud ex duis do.",
+    state: "Quintana Roo",
+    city: "Cozumel",
+    created_at: "2023-08-03 19:55:41",
+  },
+  {
+    id: 1,
+    organization_name: "Refugio Amor",
+    address:
+      "Consectetur cillum cupidatat labore occaecat. Excepteur magna officia voluptate laborum pariatur minim excepteur culpa Lorem.",
+    state: "Baja California Sur",
+    city: "La Paz",
+    created_at: "2023-08-01 12:23:48",
+  },
+  {
+    id: 2,
+    organization_name: "Qui enim ullamco minim anim sint anim non velit ipsum.",
+    address: "Officia aliquip sit culpa Lorem qui adipisicing.",
+    state: "Coahuila",
+    city: "Candela",
+    created_at: "2023-08-01 13:54:23",
+  },
+  {
+    id: 3,
+    organization_name: "Eu irure ut reprehenderit veniam.",
+    address: "Magna pariatur eiusmod dolore reprehenderit anim et.",
+    state: "Hidalgo",
+    city: "Acaxochitlan",
+    created_at: "2023-08-02 11:14:21",
+  },
+  {
+    id: 4,
+    organization_name: "Sint cillum labore occaecat in amet.",
+    address:
+      "Velit laboris laboris consequat sunt enim velit anim deserunt duis proident.",
+    state: "Aguascalientes",
+    city: "Asientos",
+    created_at: "2023-08-02 15:34:58",
+  },
+  {
+    id: 5,
+    organization_name: "Non Lorem esse commodo esse adipisicing nostrud.",
+    address:
+      "Incididunt deserunt veniam ad do est ea consequat voluptate esse duis Lorem culpa.",
+    state: "Morelos",
+    city: "Cuautla",
+    created_at: "2023-08-02 19:37:44",
+  },
+  {
+    id: 6,
+    organization_name: "Ea labore id incididunt sint sint duis pariatur.",
+    address:
+      "Velit aliquip nisi culpa pariatur pariatur sit quis eu aute laboris voluptate excepteur magna amet.",
+    state: "Sinaloa",
+    city: "Cosala",
+    created_at: "2023-08-02 20:49:12",
+  },
+  {
+    id: 7,
+    organization_name: "Eu est veniam eu aliquip nisi nostrud.",
+    address:
+      "Voluptate nostrud esse duis id exercitation in sit minim proident ex.",
+    state: "Guerrero",
+    city: "Alpoyeca",
+    created_at: "2023-08-03 17:12:35",
+  },
+  {
+    id: 8,
+    organization_name: "Nulla culpa anim deserunt aliqua.",
+    address:
+      "Duis eu aliqua officia nostrud excepteur non aliqua nostrud ex duis do.",
+    state: "Quintana Roo",
+    city: "Cozumel",
+    created_at: "2023-08-03 19:55:41",
+  },
+  {
+    id: 9,
+    organization_name:
+      "Dolor esse officia irure velit dolore duis esse nostrud qui.",
+    address:
+      "Duis eu aliqua officia nostrud excepteur non aliqua nostrud ex duis do.",
+    state: "Quintana Roo",
+    city: "Cozumel",
+    created_at: "2023-08-03 19:55:41",
+  },
+  {
+    id: 10,
+    organization_name: "Duis laboris aute laborum esse.",
+    address:
+      "Duis eu aliqua officia nostrud excepteur non aliqua nostrud ex duis do.",
+    state: "Quintana Roo",
+    city: "Cozumel",
+    created_at: "2023-08-03 19:55:41",
+  },
+];
+---
+
+<LoggedLayout title="Welcomex | Refugios">
+  <main class="px-10 py-8">
+    <!-- RESUMEN -->
+    <PageSummary
+      title="Refugios"
+      summary="Resumen de los refugios registrados y activos en el sistema."
+    >
+      <button class="btn btn-primary text-white" slot="right-content">
+        <Plus classList="w-3 h-3" />
+         Agregar Refugio
+      </button>
+    </PageSummary>
+    <!-- CARD -->
+    <Card classList="bg-base-100 shadow">
+      <!-- BARRA -->
+      <div class="flex justify-between items-center pb-5">
+        <h3 class="font-semibold text-slate-400 text-lg">Refugios</h3>
+        <SearchBar client:load>
+          <Adjustments classList="w-3 h-3" slot="filter-icon" />
+          <Close classList="w-2 h-2" slot="clear-icon" />
+        </SearchBar>
+      </div>
+      <!-- TABLA -->
+      <SheltersTable client:load shelters={shelters}>
+        <Eye classList="w-[12px] h-[12px]" slot="edit-icon" />
+        <TrashBinOutline classList="w-[12px] h-[12px]" slot="del-icon" />
+        <ClockOutline classList="w-3 h-3" slot="clock-icon" />
+      </SheltersTable>
+    </Card>
+  </main>
+</LoggedLayout>

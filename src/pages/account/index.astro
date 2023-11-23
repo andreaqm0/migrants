@@ -1,0 +1,45 @@
+---
+import LoggedLayout from "@/layouts/LoggedLayout.astro";
+import Cog from "../../components/icons/Cog.astro";
+---
+
+<LoggedLayout>
+  <main class="w-full h-screen grid">
+    <div class="card bg-base-100 shadow place-self-center w-11/12 max-w-2xl">
+      <div class="card-body">
+        <h2 class="card-title text-green-500 text-3xl mb-5">
+          <Cog classList="w-5 h-5" />
+           Administrar Mi Usuario
+        </h2>
+        <form class="grid grid-cols-2 gap-5">
+          <div class="form-control col-span-2 sm:col-span-1">
+            <label for="" class="label">
+              <span class="label-text">Nombre</span>
+            </label>
+            <input type="text" class="input input-bordered" />
+          </div>
+          <div class="form-control col-span-2 sm:col-span-1">
+            <label for="" class="label">
+              <span class="label-text">Apellido</span>
+            </label>
+            <input type="text" class="input input-bordered" />
+          </div>
+          <div class="form-control col-span-2">
+            <label for="" class="label">
+              <span class="label-text">Correo Electrónico</span>
+            </label>
+            <input type="text" name="email" class="input input-bordered" />
+          </div>
+          <label class="btn btn-outline mt-3" for="updPass"
+            >Cambiar Contraseña</label
+          >
+          <!-- <UpdatePassword id="updPass" /> -->
+
+          <button class="btn btn-primary text-white col-span-2 mt-10"
+            >Guardar</button
+          >
+        </form>
+      </div>
+    </div>
+  </main>
+</LoggedLayout>

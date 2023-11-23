@@ -1,0 +1,46 @@
+---
+import Layout from "./Layout.astro";
+---
+
+<Layout>
+  <nav class="navbar bg-base-100">
+    <div class="navbar-start">
+        <div class="tooltip tooltip-right" data-tip="Consultar registro de migrantes">
+            <a class="btn btn-ghost btn-circle" href="/">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg
+                >
+              </a>
+        </div>
+    </div>
+    <div class="navbar-center">
+        <a
+        href="/dashboard"
+        aria-current="page"
+        aria-label="Homepage"
+        class="btn btn-ghost text-3xl text-slate-700 font-bold"
+        data-svelte-h="svelte-pw6yxt"
+      >
+          <span>welco<span class="text-green-500">mex</span></span>
+      </a>
+    </div>
+    <div class="navbar-end">
+      <a class="btn btn-ghost btn-sm" href="/sign-in">
+        Iniciar Sesión
+      </a>
+      <a class="btn btn-ghost btn-sm" href="/sign-in">
+        Registrarse
+      </a>
+    </div>
+  </nav>
+  <slot />
+</Layout>

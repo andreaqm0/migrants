@@ -1,0 +1,294 @@
+---
+// import components
+import LoggedLayout from "@/layouts/LoggedLayout.astro";
+import PageSummary from "@/components/PageSummary.astro";
+import Card from "@/components/Card.astro";
+import SearchBar from "@/components/data/Stock/SearchBar.svelte";
+import StockTable from "@/components/data/Stock/StockTable.svelte"
+// import icons
+import CaretUp from "@/components/icons/CaretUp.astro";
+import CaretDown from "@/components/icons/CaretDown.astro";
+import Adjustments from "@/components/icons/Adjustments.astro";
+import Edit from "@/components/icons/Edit.astro";
+import SortHorizontal from "@/components/icons/SortHorizontal.astro";
+import Plus from "@/components/icons/Plus.astro";
+import Close from "@/components/icons/Close.astro";
+
+const stock = [
+  {
+    id: 1001,
+    name: "Adipisicing nostrud ullamco elit laborum sit cupidatat id aliquip nostrud.",
+    category: "A",
+    qty: 123,
+    min: 8,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1002,
+    name: "Adipisicing sint adipisicing in esse commodo aliqua sunt esse incididunt veniam commodo.",
+    category: "C",
+    qty: 0,
+    min: 10,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1003,
+    name: "Ex sit id velit irure cupidatat magna duis enim duis commodo tempor.",
+    category: "B",
+    qty: 56,
+    min: 25,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1004,
+    name: "Dolor in deserunt fugiat mollit deserunt ut.",
+    category: "C",
+    qty: 78,
+    min: 50,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1005,
+    name: "Deserunt sint anim tempor laboris enim labore ea culpa amet et sit reprehenderit amet dolor.",
+    category: "A",
+    qty: 254,
+    min: 300,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1006,
+    name: "AVoluptate eu reprehenderit velit incididunt ipsum ipsum.",
+    category: "A",
+    qty: 895,
+    min: 500,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1007,
+    name: "Anim ea sint laborum adipisicing duis culpa ipsum velit duis.",
+    category: "B",
+    qty: 60,
+    min: 100,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1008,
+    name: "Nulla cillum esse enim eiusmod nulla sint ex velit id incididunt voluptate in aliqua amet.",
+    category: "C",
+    qty: 45,
+    min: 20,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1009,
+    name: "Sint laboris excepteur esse aliquip esse.",
+    category: "B",
+    qty: 234,
+    min: 200,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1010,
+    name: "Laborum nulla ad fugiat mollit elit.",
+    category: "B",
+    qty: 54,
+    min: 60,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1001,
+    name: "Adipisicing nostrud ullamco elit laborum sit cupidatat id aliquip nostrud.",
+    category: "A",
+    qty: 123,
+    min: 8,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1002,
+    name: "Adipisicing sint adipisicing in esse commodo aliqua sunt esse incididunt veniam commodo.",
+    category: "C",
+    qty: 0,
+    min: 10,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1003,
+    name: "Ex sit id velit irure cupidatat magna duis enim duis commodo tempor.",
+    category: "B",
+    qty: 56,
+    min: 25,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1004,
+    name: "Dolor in deserunt fugiat mollit deserunt ut.",
+    category: "C",
+    qty: 78,
+    min: 50,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1005,
+    name: "Deserunt sint anim tempor laboris enim labore ea culpa amet et sit reprehenderit amet dolor.",
+    category: "A",
+    qty: 254,
+    min: 300,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1006,
+    name: "AVoluptate eu reprehenderit velit incididunt ipsum ipsum.",
+    category: "A",
+    qty: 895,
+    min: 500,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1007,
+    name: "Anim ea sint laborum adipisicing duis culpa ipsum velit duis.",
+    category: "B",
+    qty: 60,
+    min: 100,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1008,
+    name: "Nulla cillum esse enim eiusmod nulla sint ex velit id incididunt voluptate in aliqua amet.",
+    category: "C",
+    qty: 45,
+    min: 20,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1009,
+    name: "Sint laboris excepteur esse aliquip esse.",
+    category: "B",
+    qty: 234,
+    min: 200,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1010,
+    name: "Laborum nulla ad fugiat mollit elit.",
+    category: "B",
+    qty: 54,
+    min: 60,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1001,
+    name: "Adipisicing nostrud ullamco elit laborum sit cupidatat id aliquip nostrud.",
+    category: "A",
+    qty: 123,
+    min: 8,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1002,
+    name: "Adipisicing sint adipisicing in esse commodo aliqua sunt esse incididunt veniam commodo.",
+    category: "C",
+    qty: 0,
+    min: 10,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1003,
+    name: "Ex sit id velit irure cupidatat magna duis enim duis commodo tempor.",
+    category: "B",
+    qty: 56,
+    min: 25,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1004,
+    name: "Dolor in deserunt fugiat mollit deserunt ut.",
+    category: "C",
+    qty: 78,
+    min: 50,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1005,
+    name: "Deserunt sint anim tempor laboris enim labore ea culpa amet et sit reprehenderit amet dolor.",
+    category: "A",
+    qty: 254,
+    min: 300,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1006,
+    name: "AVoluptate eu reprehenderit velit incididunt ipsum ipsum.",
+    category: "A",
+    qty: 895,
+    min: 500,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1007,
+    name: "Anim ea sint laborum adipisicing duis culpa ipsum velit duis.",
+    category: "B",
+    qty: 60,
+    min: 100,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1008,
+    name: "Nulla cillum esse enim eiusmod nulla sint ex velit id incididunt voluptate in aliqua amet.",
+    category: "C",
+    qty: 45,
+    min: 20,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1009,
+    name: "Sint laboris excepteur esse aliquip esse.",
+    category: "B",
+    qty: 234,
+    min: 200,
+    imgUrl: "/default.png",
+  },
+  {
+    id: 1010,
+    name: "Laborum nulla ad fugiat mollit elit.",
+    category: "B",
+    qty: 54,
+    min: 60,
+    imgUrl: "/default.png",
+  },
+];
+---
+
+<LoggedLayout title="Welcomex | Inventario">
+  <main class="px-10 py-8">
+    <PageSummary
+      title="Inventario"
+      summary="Resumen del Inventario de cada producto."
+    >
+      <div class="flex gap-3" slot="right-content">
+        <button class="btn btn-primary btn-outline">
+          <Plus classList="w-3 h-3" />
+           Agregar Categoria
+        </button>
+        <button class="btn btn-primary text-white" slot="right-content">
+          <Plus classList="w-3 h-3" />
+           Agregar Producto
+        </button>
+      </div>
+    </PageSummary>
+    <Card classList="bg-base-100 shadow">
+      <div class="flex justify-between items-center pb-5">
+        <h2 class="font-semibold text-slate-400 text-lg">Inventario</h2>
+        <SearchBar client:load>
+          <Adjustments classList="w-3 h-3" slot="filter-icon" />
+          <Close classList="w-2 h-2" slot="clear-icon" />
+        </SearchBar>
+      </div>
+      <StockTable client:load {stock}>
+        <Edit classList="w-[14px] h-[14px] text-gray-600" slot="edit-icon" />
+        <SortHorizontal classList="w-[14px] h-[14px] text-gray-600" slot="tran-icon" />        
+        <CaretUp classList="w-[10px] h-[10px] text-gray-600" slot="income-icon" />       
+        <CaretDown classList="w-[10px] h-[10px]" slot="withdrawal-icon"/>
+      </StockTable>
+    </Card>
+  </main>
+</LoggedLayout>
